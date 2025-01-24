@@ -1,16 +1,23 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private Rigidbody2D rb2d;
+
+    private void Start()
     {
-        
+        rb2d = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField, Range(1, 100)] private float movementSpeed = 5f;
+
+    public bool onSurface;
+
+    public void OnMove(InputAction.CallbackContext context)
     {
-        
+        Vector2 velocity = context.ReadValue<Vector2>() * movementSpeed;
+        if (onSurface) velocity.y = 0;
+        rb2d.AddForce(velocity, ForceMode2D.Impulse);
     }
 }
