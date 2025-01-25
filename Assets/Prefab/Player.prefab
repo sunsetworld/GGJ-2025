@@ -313,7 +313,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   oxygen: 100
   oxygenMax: 0
-  oxygenDepeletion: 5
+  oxygenDepeletion: 2.5
 --- !u!1 &6324924673586766297
 GameObject:
   m_ObjectHideFlags: 0
