@@ -45,4 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bubblePrefab: {fileID: 7432653964122779066, guid: 361752f4990ae4bdb8dd104b7f78e9df, type: 3}
-  spawnTime: 5
+  spawnTime: 6

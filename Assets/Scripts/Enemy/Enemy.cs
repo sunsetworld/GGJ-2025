@@ -6,6 +6,8 @@ public class Enemy : MonoBehaviour
     Rigidbody2D rb2d;
     GameManager gameManager;
     public bool moveLeft;
+    [SerializeField, Range(0.01f, 1f)] private float playerOxygenReductionAmount = 0.2f;
+    private bool canDestroyKitten = true;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -22,13 +24,21 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Kitten"))
+        if (other.gameObject.CompareTag("Kitten") && canDestroyKitten)
         {
+            canDestroyKitten = false;
             Destroy(other.gameObject);
             gameManager.kittenAmount--;
             gameManager.currentKittens--;
             Destroy(this.gameObject);
         }
-        if (other.gameObject.CompareTag("Walls")) Destroy(this.gameObject);
+        else if (other.gameObject.CompareTag("Player"))
+        {
+            canDestroyKitten = false;
+            PlayerOxygen playerOxygen = other.GetComponent<PlayerOxygen>();
+            playerOxygen.oxygen -= playerOxygen.oxygenMax * playerOxygenReductionAmount;
+            Destroy(this.gameObject);
+        }
+        else if (other.gameObject.CompareTag("Walls")) Destroy(this.gameObject);
     }
 }

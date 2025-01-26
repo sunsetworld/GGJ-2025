@@ -12,10 +12,12 @@ public class Kitten : MonoBehaviour
     GameManager gameManager;
     [SerializeField] private float2 distanceRandomiser;
     [SerializeField] private AudioClip scoreSound;
+    SpriteRenderer spriteRenderer;
 
     private void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
 
@@ -33,6 +35,8 @@ public class Kitten : MonoBehaviour
         // transform.position = Vector3.MoveTowards(transform.position, player.position, distance * Time.deltaTime);
         float newRandomiser = Random.Range(distanceRandomiser.x, distanceRandomiser.y);
         rb2d.linearVelocity = player.position - transform.position;
+        if (rb2d.linearVelocityX > 0) spriteRenderer.flipX = true;
+        else if (rb2d.linearVelocityX < 0) spriteRenderer.flipX = false;
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
