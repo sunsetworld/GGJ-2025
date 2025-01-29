@@ -8,11 +8,13 @@ public class Enemy : MonoBehaviour
     public bool moveLeft;
     [SerializeField, Range(0.01f, 1f)] private float playerOxygenReductionAmount = 0.2f;
     private bool canDestroyKitten = true;
+    SpriteRenderer spriteRenderer;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -20,6 +22,8 @@ public class Enemy : MonoBehaviour
     {
         if (!moveLeft) rb2d.linearVelocity = Vector2.right * moveSpeed;
         else rb2d.linearVelocity = Vector2.left * moveSpeed;
+        if (rb2d.linearVelocityX > 0) spriteRenderer.flipX = true;
+        else if (rb2d.linearVelocityX < 0) spriteRenderer.flipX = false;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
